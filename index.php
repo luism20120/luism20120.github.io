@@ -1,79 +1,68 @@
 <?php
-  if (!empty($_GET['q'])) {
-    switch ($_GET['q']) {
-      case 'info':
-        phpinfo(); 
-        exit;
-      break;
-    }
-  }
+error_reporting(0);
+
 ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Laragon</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAGINA DE BIENVENIDA</title>
+    <link rel="stylesheet" href="public/estilos/estilos.css">
+     <!-- pNotify -->
+     <link href="public/pnotify/css/pnotify.css" rel="stylesheet" />
+        <link href="public/pnotify/css/pnotify.buttons.css" rel="stylesheet" />
+        <link href="public/pnotify/css/custom.min.css" rel="stylesheet" />
+        <!-- pnotify -->
+        <script src="public/pnotify/js/jquery.min.js">
+        </script>
+        <script src="public/pnotify/js/pnotify.js">
+        </script>
+        <script src="public/pnotify/js/pnotify.buttons.js">
+        </script>
 
-        <link href="https://fonts.googleapis.com/css?family=Karla:400" rel="stylesheet" type="text/css">
+</head>
+<body>
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+    <h1> BIENVENIDOS AL MPPPST, REGISTRA TU ASISTENCIA</h1>
+    <h2 id="fecha"><?= date("d/m/Y, h:i:s") ?></h2>
+    <?php
+    include "modelo/conexion.php";
+    include "controlador/controlador_registrar_asistencia.php";
+    
+    ?>
+    <div class="container">
+        <a class="acceso" href="vista/login/login.php">Ingresar al Sistema</a>
+        <p class="cedula">Ingrese Su Cedula</p>
+        <form action="" method="POST">
+            <input type="number" placeholder="Cedula del Empleado" name="txtdni" id="txtdni">
+            <div class="botones">
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Karla';
-            }
+                <button class="salida" type="submit" name="btnsalida" value="ok">SALIDA</button>
+                <button class="entrada" type="submit" name="btnentrada" value="ok">ENTRADA</button>
 
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-
-            .opt {
-                margin-top: 30px;
-            }
-
-            .opt a {
-              text-decoration: none;
-              font-size: 150%;
-            }
-            
-            a:hover {
-              color: red;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title" title="Laragon">Laragon</div>
-     
-                <div class="info"><br />
-                      <?php print($_SERVER['SERVER_SOFTWARE']); ?><br />
-                      PHP version: <?php print phpversion(); ?>   <span><a title="phpinfo()" href="/?q=info">info</a></span><br />
-                      Document Root: <?php print ($_SERVER['DOCUMENT_ROOT']); ?><br />
-
-                </div>
-                <div class="opt">
-                  <div><a title="Getting Started" href="https://laragon.org/docs">Getting Started</a></div>
-                </div>
             </div>
+        </form>
+    </div>
 
-        </div>
-    </body>
+    <script>
+       
+
+        setInterval(() => {
+            let fecha=new Date();
+        let fechaHora=fecha.toLocaleString();
+        document.getElementById("fecha").textContent=fechaHora;
+            
+        }, 1000);
+    </script>
+<script>
+    let dni = document.getElementById("txtdni");
+    dni.addEventListener("input", function() {
+        if (this.value.length > 8) {
+            this.value = this.value.slice(0, 8);
+        }
+    });
+</script>
+
+</body>
 </html>
